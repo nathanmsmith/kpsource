@@ -1,106 +1,148 @@
 <style>
-
-</style>
-
-<style>
-  .article-content {
-    position: relative;
-    background: #040D12;
-    z-index: 2;
-    min-height: 100vh;
-    padding: 4rem 2rem;
-  }
-
-  .fullscreen-image-section {
+  .split-screen-section {
     position: relative;
     width: 100vw;
+    min-height: 100vh;
+    margin-left: calc(-50vw + 50%);
+    display: flex;
+    background: #040D12;
+  }
+
+  .split-left,
+  .split-right {
+    width: 50%;
     height: 100vh;
-    overflow: hidden;
+    position: sticky;
+    top: 0;
+  }
+
+  .split-left {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     padding: 4rem;
   }
 
-  .fullscreen-image-section img {
+  .scroll-checklist {
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s ease-out;
+  }
+
+  .checklist-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .checkbox {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border: 2px solid #5C8374;
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .checklist-item.visible .checkbox {
+    background: #5C8374;
+    border-color: #93B1A6;
+  }
+
+  .checkbox::after {
+    content: '';
     position: absolute;
-    top: 0;
-    left: 0;
+    left: 9px;
+    top: 4px;
+    width: 8px;
+    height: 14px;
+    border: solid #040D12;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg) scale(0);
+    transition: transform 0.3s ease 0.2s;
+  }
+
+  .checklist-item.visible .checkbox::after {
+    transform: rotate(45deg) scale(1);
+  }
+
+  .checklist-text {
+    color: #e8e8e8;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    padding-top: 0.25rem;
+  }
+
+  .split-right {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .split-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: 1;
-  }
-
-  .pull-quote {
-    position: relative;
-    z-index: 2;
-    max-width: 500px;
-    background: rgba(4, 13, 18, 0.85);
-    padding: 3rem;
-    border-left: 4px solid #5C8374;
-    backdrop-filter: blur(10px);
-  }
-
-  .pull-quote blockquote {
-    margin: 0;
-    font-size: 2rem;
-    line-height: 1.4;
-    color: #e8e8e8;
-    font-style: italic;
-    font-weight: 400;
-  }
-
-  .pull-quote cite {
     display: block;
-    margin-top: 1.5rem;
-    font-size: 1.2rem;
-    color: #5C8374;
-    font-style: normal;
-    font-weight: 600;
   }
 
-  @media (max-width: 768px) {
-    .psychosis-title {
-      font-size: 3rem;
+  @media (max-width: 1024px) {
+    .split-screen-section {
+      flex-direction: column;
     }
 
-    .article-inner {
+    .split-left,
+    .split-right {
+      width: 100%;
+      position: relative;
+    }
+
+    .split-left {
+      min-height: 100vh;
       padding: 2rem;
     }
 
-    .article-content h2 {
-      font-size: 2rem;
-    }
-
-    .article-content h3 {
-      font-size: 1.5rem;
-    }
-
-    .article-content p {
-      font-size: 1rem;
-    }
-
-    .dropcap {
-      font-size: 3.5rem;
-    }
-
-    .fullscreen-image-section {
-      padding: 2rem;
-      justify-content: center;
-    }
-
-    .pull-quote {
-      max-width: 100%;
-      padding: 2rem;
-    }
-
-    .pull-quote blockquote {
-      font-size: 1.5rem;
-    }
-
-    .pull-quote cite {
-      font-size: 1rem;
+    .split-right {
+      height: 60vh;
     }
   }
 </style>
+
+<script>
+  // Scroll animation for checklist items
+  function initChecklistAnimation() {
+    const checklistItems = document.querySelectorAll('.checklist-item');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 150);
+        }
+      });
+    }, {
+      threshold: 0.3,
+      rootMargin: '0px 0px -100px 0px'
+    });
+
+    checklistItems.forEach(item => {
+      observer.observe(item);
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initChecklistAnimation);
+  } else {
+    initChecklistAnimation();
+  }
+</script>
