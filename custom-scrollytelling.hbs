@@ -1,449 +1,1159 @@
 {{!< default}}
 {{!-- The tag above means: insert everything in this file into the body of the default.hbs template --}}
 
-NATHAN TEST
-
 {{#post}}
 
-<main class="gh-main">
-    <article class="gh-article {{post_class}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-        {{#match @page.show_title_and_feature_image}}
-            <header class="gh-article-header gh-canvas">
-                <h1 class="gh-article-title is-title">{{title}}</h1>
-                {{#if custom_excerpt}}
-                    <p class="gh-article-excerpt is-body">{{custom_excerpt}}</p>
-                {{/if}}
-                {{> "feature-image"}}
-            </header>
-        {{/match}}
+<style>
+  body {
+    font-family: "EB Garamond", Garamond, "Times New Roman", serif;
+  }
 
-        <section class="gh-content gh-canvas is-body">
-            {{content}}
-        </section>
+  .psychosis-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #040D12;
+    z-index: 1;
+  }
 
-    </article>
-</main>
+  .psychosis-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(24, 61, 61, 0.4) 0%, transparent 50%),
+      radial-gradient(circle at 80% 50%, rgba(92, 131, 116, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(147, 177, 166, 0.2) 0%, transparent 50%);
+    animation: psychosis-pulse 8s ease-in-out infinite;
+  }
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  .glitch-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(24, 61, 61, 0.03) 0px,
+      rgba(92, 131, 116, 0.02) 1px,
+      rgba(147, 177, 166, 0.03) 2px,
+      transparent 3px,
+      transparent 4px
+    );
+    animation: glitch-scan 0.3s linear infinite;
+    pointer-events: none;
+  }
 
-        body {
-            font-family: 'Georgia', serif;
-            background: #002244;
-            color: #ffffff;
-            overflow-x: hidden;
-        }
+  .floating-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
 
-        .header {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-            background: linear-gradient(135deg, #002244 0%, #006b7d 100%);
-        }
+  .shape {
+    position: absolute;
+    opacity: 0.6;
+    filter: blur(3px);
+    animation: float-shape 20s ease-in-out infinite;
+    border-radius: 50%;
+  }
 
-        .header h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            animation: fadeInDown 1s ease-out;
-        }
+  .shape:nth-child(1) {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(24, 61, 61, 0.6), transparent);
+    top: 10%;
+    left: 10%;
+    animation-duration: 12s;
+    animation-delay: 0s;
+  }
 
-        .header .subtitle {
-            font-size: 1.5rem;
-            font-style: italic;
-            color: #FC4C02;
-            animation: fadeInUp 1s ease-out 0.5s both;
-        }
+  .shape:nth-child(2) {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(92, 131, 116, 0.6), transparent);
+    top: 60%;
+    left: 70%;
+    animation-duration: 10s;
+    animation-delay: -3s;
+  }
 
-        .header .year {
-            font-size: 8rem;
-            font-weight: bold;
-            color: rgba(252, 76, 2, 0.3);
-            margin-top: 2rem;
-            animation: fadeInUp 1s ease-out 1s both;
-        }
+  .shape:nth-child(3) {
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(147, 177, 166, 0.5), transparent);
+    top: 80%;
+    left: 20%;
+    animation-duration: 14s;
+    animation-delay: -7s;
+  }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  .shape:nth-child(4) {
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(92, 131, 116, 0.5), transparent);
+    top: 30%;
+    left: 80%;
+    animation-duration: 11s;
+    animation-delay: -5s;
+  }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  .shape:nth-child(5) {
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(147, 177, 166, 0.5), transparent);
+    top: 40%;
+    left: 40%;
+    animation-duration: 13s;
+    animation-delay: -2s;
+  }
 
-        .scroll-container {
-            position: relative;
-        }
+  .shape:nth-child(6) {
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(24, 61, 61, 0.6), transparent);
+    top: 15%;
+    left: 60%;
+    animation-duration: 9s;
+    animation-delay: -6s;
+  }
 
-        .sticky-visual {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #001a33;
-        }
+  .shape:nth-child(7) {
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(92, 131, 116, 0.4), transparent);
+    top: 70%;
+    left: 50%;
+    animation-duration: 15s;
+    animation-delay: -8s;
+  }
 
-        .visual-content {
-            width: 100%;
-            max-width: 800px;
-            height: 500px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.6s ease-out;
-        }
+  .shape:nth-child(8) {
+    width: 190px;
+    height: 190px;
+    background: radial-gradient(circle, rgba(147, 177, 166, 0.6), transparent);
+    top: 50%;
+    left: 15%;
+    animation-duration: 11s;
+    animation-delay: -4s;
+  }
 
-        .record-display {
-            font-size: 8rem;
-            font-weight: bold;
-            color: #FC4C02;
-            text-shadow: 0 0 30px rgba(252, 76, 2, 0.5);
-            font-family: 'Arial Black', sans-serif;
-        }
+  .distortion-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+      repeating-radial-gradient(circle at 30% 30%, transparent 0, transparent 10px, rgba(255, 255, 255, 0.03) 10px, rgba(255, 255, 255, 0.03) 20px);
+    animation: distortion-rotate 30s linear infinite;
+    mix-blend-mode: overlay;
+  }
 
-        .record-label {
-            font-size: 2rem;
-            color: #ffffff;
-            margin-top: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
+  .title-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    text-align: center;
+  }
 
-        .stat-display {
-            display: flex;
-            gap: 3rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+  .psychosis-title {
+    font-size: 6rem;
+    font-weight: 900;
+    color: #93B1A6;
+    text-shadow:
+      0 0 10px rgba(92, 131, 116, 0.8),
+      0 0 20px rgba(147, 177, 166, 0.6),
+      0 0 30px rgba(24, 61, 61, 0.4),
+      3px 3px 0 rgba(24, 61, 61, 0.4),
+      -3px -3px 0 rgba(92, 131, 116, 0.4);
+    animation: title-glitch 5s ease-in-out infinite;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
 
-        .stat-box {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(252, 76, 2, 0.1);
-            border-radius: 10px;
-            min-width: 150px;
-        }
+  @keyframes psychosis-pulse {
+    0%, 100% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    25% {
+      transform: scale(1.1) rotate(2deg);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(0.95) rotate(-2deg);
+      opacity: 0.9;
+    }
+    75% {
+      transform: scale(1.05) rotate(1deg);
+      opacity: 0.85;
+    }
+  }
 
-        .stat-number {
-            font-size: 4rem;
-            color: #FC4C02;
-            font-weight: bold;
-        }
+  @keyframes glitch-scan {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(4px);
+    }
+  }
 
-        .stat-label {
-            font-size: 1.2rem;
-            color: #ffffff;
-            margin-top: 0.5rem;
-        }
+  @keyframes float-shape {
+    0%, 100% {
+      transform: translate(0, 0) scale(1) rotate(0deg);
+      opacity: 0.6;
+    }
+    20% {
+      transform: translate(100px, -120px) scale(1.3) rotate(144deg);
+      opacity: 0.8;
+    }
+    40% {
+      transform: translate(-80px, -200px) scale(0.8) rotate(288deg);
+      opacity: 0.5;
+    }
+    60% {
+      transform: translate(-150px, -100px) scale(1.2) rotate(432deg);
+      opacity: 0.7;
+    }
+    80% {
+      transform: translate(60px, -180px) scale(0.9) rotate(576deg);
+      opacity: 0.6;
+    }
+  }
 
-        .player-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            width: 90%;
-            max-width: 900px;
-        }
+  @keyframes distortion-rotate {
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+    50% {
+      transform: rotate(180deg) scale(1.2);
+    }
+    100% {
+      transform: rotate(360deg) scale(1);
+    }
+  }
 
-        .player-card {
-            background: rgba(252, 76, 2, 0.1);
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            border: 2px solid #FC4C02;
-        }
+  @keyframes title-glitch {
+    0%, 90%, 100% {
+      transform: translate(0, 0) skew(0deg);
+      filter: hue-rotate(0deg);
+    }
+    92% {
+      transform: translate(-5px, 2px) skew(-2deg);
+      filter: hue-rotate(90deg);
+    }
+    94% {
+      transform: translate(5px, -2px) skew(2deg);
+      filter: hue-rotate(-90deg);
+    }
+    96% {
+      transform: translate(-2px, -3px) skew(1deg);
+      filter: hue-rotate(180deg);
+    }
+  }
 
-        .player-name {
-            font-size: 1.5rem;
-            color: #FC4C02;
-            margin-bottom: 0.5rem;
-        }
+  .article-content {
+    position: relative;
+    background: #040D12;
+    z-index: 2;
+    min-height: 100vh;
+    padding: 4rem 2rem;
+  }
 
-        .player-position {
-            font-size: 1rem;
-            color: #ffffff;
-            opacity: 0.8;
-        }
+  .article-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem;
+  }
 
-        .trophy-icon {
-            font-size: 12rem;
-            animation: pulse 2s ease-in-out infinite;
-        }
+  .article-content h2 {
+    color: #e8e8e8;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-        }
+  .article-content h3 {
+    color: #e8e8e8;
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
 
-        .content-sections {
-            position: relative;
-            z-index: 1;
-        }
+  .article-content p {
+    color: #e8e8e8;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
 
-        .content-step {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 4rem 2rem;
-        }
+  .dropcap {
+    float: left;
+    font-size: 5rem;
+    line-height: 0.8;
+    margin: 0.1em 0.1em 0 0;
+    color: #e8e8e8;
+    font-weight: 900;
+  }
 
-        .step-content {
-            max-width: 600px;
-            background: rgba(0, 34, 68, 0.95);
-            padding: 3rem;
-            border-radius: 15px;
-            border-left: 5px solid #FC4C02;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            margin-left: auto;
-            margin-right: 4rem;
-        }
+  .fullscreen-image-section {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 4rem;
+  }
 
-        .step-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: #FC4C02;
-        }
+  .fullscreen-image-section img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
 
-        .step-content p {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            color: #e0e0e0;
-        }
+  .pull-quote {
+    position: relative;
+    z-index: 2;
+    max-width: 500px;
+    background: rgba(4, 13, 18, 0.85);
+    padding: 3rem;
+    border-left: 4px solid #5C8374;
+    backdrop-filter: blur(10px);
+  }
 
-        .footer {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 4rem 2rem;
-            background: linear-gradient(135deg, #006b7d 0%, #002244 100%);
-        }
+  .pull-quote blockquote {
+    margin: 0;
+    font-size: 2rem;
+    line-height: 1.4;
+    color: #e8e8e8;
+    font-style: italic;
+    font-weight: 400;
+  }
 
-        .footer h2 {
-            font-size: 3rem;
-            margin-bottom: 2rem;
-            color: #FC4C02;
-        }
+  .pull-quote cite {
+    display: block;
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    color: #5C8374;
+    font-style: normal;
+    font-weight: 600;
+  }
 
-        .footer p {
-            font-size: 1.5rem;
-            max-width: 800px;
-            line-height: 1.8;
-        }
+  @media (max-width: 768px) {
+    .psychosis-title {
+      font-size: 3rem;
+    }
 
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
+    .article-inner {
+      padding: 2rem;
+    }
 
-            .header .year {
-                font-size: 4rem;
-            }
+    .article-content h2 {
+      font-size: 2rem;
+    }
 
-            .record-display {
-                font-size: 5rem;
-            }
+    .article-content h3 {
+      font-size: 1.5rem;
+    }
 
-            .record-label {
-                font-size: 1.5rem;
-            }
+    .article-content p {
+      font-size: 1rem;
+    }
 
-            .step-content {
-                margin-right: 2rem;
-                margin-left: 2rem;
-            }
+    .dropcap {
+      font-size: 3.5rem;
+    }
 
-            .step-content h2 {
-                font-size: 2rem;
-            }
+    .fullscreen-image-section {
+      padding: 2rem;
+      justify-content: center;
+    }
 
-            .step-content p {
-                font-size: 1.1rem;
-            }
+    .pull-quote {
+      max-width: 100%;
+      padding: 2rem;
+    }
 
-            .stat-display {
-                gap: 1.5rem;
-            }
+    .pull-quote blockquote {
+      font-size: 1.5rem;
+    }
 
-            .stat-number {
-                font-size: 3rem;
-            }
+    .pull-quote cite {
+      font-size: 1rem;
+    }
+  }
+</style>
 
-            .trophy-icon {
-                font-size: 8rem;
-            }
-        }
-    </style>
+<div class="psychosis-container">
+  <div class="psychosis-bg"></div>
+  <div class="glitch-overlay"></div>
+  <div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  <div class="distortion-layer"></div>
 
-    <div class="header">
-        <h1>{{title}}</h1>
-        {{#if custom_excerpt}}
-            <p class="subtitle">{{custom_excerpt}}</p>
-        {{/if}}
-    </div>
+  <div class="title-container">
+    <h1 class="psychosis-title">{{title}}</h1>
+  </div>
+</div>
 
-    <div class="scroll-container">
-        <div class="sticky-visual">
-            <div class="visual-content" id="visualContent">
-                <div class="record-display">17-0</div>
-                <div class="record-label">Perfect Record</div>
-            </div>
-        </div>
+<article class="article-content">
+  <div class="article-inner">
+    {{content}}
+  </div>
+</article>
 
-        <div class="content-sections">
-            <div class="content-step" data-step="0">
-                <div class="step-content">
-                    <h2>A Season Like No Other</h2>
-                    <p>In 1972, the Miami Dolphins accomplished what no NFL team had done before, and what no team has done since. They finished the season without a single loss, going 17-0 including the playoffs and Super Bowl.</p>
-                    {{content}}
-                </div>
-            </div>
 
-            <div class="content-step" data-step="1">
-                <div class="step-content">
-                    <h2>The Coach</h2>
-                    <p>Don Shula, in just his third season with Miami, orchestrated one of the greatest coaching performances in sports history. His no-nonsense approach and innovative strategies transformed the Dolphins into an unstoppable force.</p>
-                    {{content}}
-                </div>
-            </div>
-
-            <div class="content-step" data-step="2">
-                <div class="step-content">
-                    <h2>The Perfect Pair</h2>
-                    <p>When starting quarterback Bob Griese was injured in Week 5, backup Earl Morrall stepped in seamlessly. The duo combined for 19 touchdowns and led the team without missing a beat, showcasing the depth that made this team special.</p>
-                </div>
-            </div>
-
-            <div class="content-step" data-step="3">
-                <div class="step-content">
-                    <h2>The No-Name Defense</h2>
-                    <p>Miami's defense earned the nickname "No-Name Defense" because of their lack of star power. But they were dominant, allowing just 12.2 points per game and creating turnovers when it mattered most.</p>
-                </div>
-            </div>
-
-            <div class="content-step" data-step="4">
-                <div class="step-content">
-                    <h2>The Ground Game</h2>
-                    <p>Larry Csonka and Mercury Morris formed a devastating running back duo, each rushing for over 1,000 yards. Their punishing style wore down defenses and controlled the clock, making Miami nearly impossible to beat.</p>
-                </div>
-            </div>
-
-            <div class="content-step" data-step="5">
-                <div class="step-content">
-                    <h2>Super Bowl VII</h2>
-                    <p>On January 14, 1973, at the Los Angeles Memorial Coliseum, the Dolphins defeated the Washington Redskins 14-7 to complete their perfect season. Safety Jake Scott's two interceptions earned him Super Bowl MVP honors.</p>
-                </div>
-            </div>
-
-            <div class="content-step" data-step="6">
-                <div class="step-content">
-                    <h2>The Legacy</h2>
-                    <p>Over 50 years later, the 1972 Dolphins remain the only team to complete a perfect season in NFL history. Team members famously toast champagne each year when the last undefeated team loses, celebrating their unique achievement.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer">
-        <h2>Still Perfect</h2>
-        <p>The 1972 Miami Dolphins proved that teamwork, discipline, and determination can create something truly extraordinary. Their 17-0 record stands as a testament to one of the greatest teams in sports history.</p>
-        <div style="margin-top: 3rem; font-size: 6rem;">🏆</div>
-    </div>
-
-    <script>
-        const visualContent = document.getElementById('visualContent');
-        const steps = document.querySelectorAll('.content-step');
-
-        const visualStates = [
-            {
-                html: '<div class="record-display">17-0</div><div class="record-label">Perfect Record</div>'
-            },
-            {
-                html: '<div class="stat-box"><div class="stat-number">Don Shula</div><div class="stat-label">Head Coach</div></div>'
-            },
-            {
-                html: '<div class="stat-display"><div class="stat-box"><div class="stat-number">Bob<br>Griese</div><div class="stat-label">Starting QB</div></div><div class="stat-box"><div class="stat-number">Earl<br>Morrall</div><div class="stat-label">Backup QB</div></div></div>'
-            },
-            {
-                html: '<div class="stat-display"><div class="stat-box"><div class="stat-number">12.2</div><div class="stat-label">Points Allowed<br>Per Game</div></div><div class="stat-box"><div class="stat-number">2.0</div><div class="stat-label">Turnovers<br>Per Game</div></div></div>'
-            },
-            {
-                html: '<div class="stat-display"><div class="stat-box"><div class="stat-number">1,117</div><div class="stat-label">Larry Csonka<br>Rush Yards</div></div><div class="stat-box"><div class="stat-number">1,000</div><div class="stat-label">Mercury Morris<br>Rush Yards</div></div></div>'
-            },
-            {
-                html: '<div class="stat-display"><div class="stat-box"><div class="stat-number">14-7</div><div class="stat-label">Super Bowl VII<br>Final Score</div></div><div class="stat-box"><div class="stat-number">Jake<br>Scott</div><div class="stat-label">Super Bowl<br>MVP</div></div></div>'
-            },
-            {
-                html: '<div class="trophy-icon">🏆</div><div class="record-label">Only Perfect Season</div>'
-            }
-        ];
-
-        function updateVisual(stepIndex) {
-            if (stepIndex >= 0 && stepIndex < visualStates.length) {
-                visualContent.style.opacity = '0';
-                visualContent.style.transform = 'scale(0.9)';
-
-                setTimeout(() => {
-                    visualContent.innerHTML = visualStates[stepIndex].html;
-                    visualContent.style.opacity = '1';
-                    visualContent.style.transform = 'scale(1)';
-                }, 300);
-            }
-        }
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '-50% 0px -50% 0px',
-            threshold: 0
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const stepIndex = parseInt(entry.target.getAttribute('data-step'));
-                    updateVisual(stepIndex);
-                }
-            });
-        }, observerOptions);
-
-        steps.forEach(step => {
-            observer.observe(step);
-        });
-
-        // Initialize with first visual
-        updateVisual(0);
-    </script>
+{{!     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script> }}
+{{!     <style> }}
+{{!         * { }}
+{{!             margin: 0; }}
+{{!             padding: 0; }}
+{{!             box-sizing: border-box; }}
+{{!         } }}
+{{!}}
+{{!         body { }}
+{{!             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }}
+{{!             background: #0a0e27; }}
+{{!             color: #ffffff; }}
+{{!             overflow-x: hidden; }}
+{{!         } }}
+{{!}}
+{{!         .header { }}
+{{!             height: 100vh; }}
+{{!             display: flex; }}
+{{!             flex-direction: column; }}
+{{!             justify-content: center; }}
+{{!             align-items: center; }}
+{{!             text-align: center; }}
+{{!             padding: 2rem; }}
+{{!             background: linear-gradient(135deg, #0a0e27 0%, #1a2744 100%); }}
+{{!         } }}
+{{!}}
+{{!         .header h1 { }}
+{{!             font-size: 4rem; }}
+{{!             margin-bottom: 1rem; }}
+{{!             text-transform: uppercase; }}
+{{!             letter-spacing: 4px; }}
+{{!             background: linear-gradient(45deg, #00CED1, #FC4C02); }}
+{{!             -webkit-background-clip: text; }}
+{{!             -webkit-text-fill-color: transparent; }}
+{{!             background-clip: text; }}
+{{!             animation: fadeInDown 1s ease-out; }}
+{{!         } }}
+{{!}}
+{{!         .header .subtitle { }}
+{{!             font-size: 1.5rem; }}
+{{!             color: #00CED1; }}
+{{!             animation: fadeInUp 1s ease-out 0.5s both; }}
+{{!         } }}
+{{!}}
+{{!         @keyframes fadeInDown { }}
+{{!             from { }}
+{{!                 opacity: 0; }}
+{{!                 transform: translateY(-30px); }}
+{{!             } }}
+{{!             to { }}
+{{!                 opacity: 1; }}
+{{!                 transform: translateY(0); }}
+{{!             } }}
+{{!         } }}
+{{!}}
+{{!         @keyframes fadeInUp { }}
+{{!             from { }}
+{{!                 opacity: 0; }}
+{{!                 transform: translateY(30px); }}
+{{!             } }}
+{{!             to { }}
+{{!                 opacity: 1; }}
+{{!                 transform: translateY(0); }}
+{{!             } }}
+{{!         } }}
+{{!}}
+{{!         .scroll-container { }}
+{{!             position: relative; }}
+{{!         } }}
+{{!}}
+{{!         .sticky-visual { }}
+{{!             position: sticky; }}
+{{!             top: 0; }}
+{{!             height: 100vh; }}
+{{!             display: flex; }}
+{{!             justify-content: center; }}
+{{!             align-items: center; }}
+{{!             background: #0a0e27; }}
+{{!         } }}
+{{!}}
+{{!         .media-container { }}
+{{!             width: 90%; }}
+{{!             max-width: 900px; }}
+{{!             height: 600px; }}
+{{!             background: rgba(26, 39, 68, 0.8); }}
+{{!             border-radius: 20px; }}
+{{!             padding: 2rem; }}
+{{!             box-shadow: 0 10px 50px rgba(0, 206, 209, 0.2); }}
+{{!             border: 2px solid rgba(0, 206, 209, 0.3); }}
+{{!             display: flex; }}
+{{!             flex-direction: column; }}
+{{!             transition: opacity 0.3s ease-in-out; }}
+{{!         } }}
+{{!}}
+{{!         .media-title { }}
+{{!             text-align: center; }}
+{{!             font-size: 2rem; }}
+{{!             margin-bottom: 1.5rem; }}
+{{!             color: #00CED1; }}
+{{!             font-weight: bold; }}
+{{!             transition: opacity 0.3s ease-in-out; }}
+{{!         } }}
+{{!}}
+{{!         .media-content { }}
+{{!             flex: 1; }}
+{{!             display: flex; }}
+{{!             justify-content: center; }}
+{{!             align-items: center; }}
+{{!             position: relative; }}
+{{!             overflow: hidden; }}
+{{!             border-radius: 10px; }}
+{{!         } }}
+{{!}}
+{{!         /* Chart-specific styles */ }}
+{{!         .media-content canvas { }}
+{{!             max-width: 100%; }}
+{{!             max-height: 100%; }}
+{{!         } }}
+{{!}}
+{{!         /* Image-specific styles */ }}
+{{!         .media-content img { }}
+{{!             max-width: 100%; }}
+{{!             max-height: 100%; }}
+{{!             object-fit: contain; }}
+{{!             border-radius: 10px; }}
+{{!             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); }}
+{{!         } }}
+{{!}}
+{{!         /* Video-specific styles */ }}
+{{!         .media-content video { }}
+{{!             max-width: 100%; }}
+{{!             max-height: 100%; }}
+{{!             border-radius: 10px; }}
+{{!             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); }}
+{{!         } }}
+{{!}}
+{{!         /* Text/Quote styles */ }}
+{{!         .media-quote { }}
+{{!             font-size: 2.5rem; }}
+{{!             font-style: italic; }}
+{{!             text-align: center; }}
+{{!             color: #00CED1; }}
+{{!             line-height: 1.5; }}
+{{!             padding: 2rem; }}
+{{!             max-width: 600px; }}
+{{!         } }}
+{{!}}
+{{!         .media-quote-author { }}
+{{!             font-size: 1.5rem; }}
+{{!             color: #FC4C02; }}
+{{!             margin-top: 1.5rem; }}
+{{!             font-style: normal; }}
+{{!         } }}
+{{!}}
+{{!         /* Stats grid styles */ }}
+{{!         .media-stats { }}
+{{!             display: grid; }}
+{{!             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }}
+{{!             gap: 2rem; }}
+{{!             width: 100%; }}
+{{!         } }}
+{{!}}
+{{!         .stat-box { }}
+{{!             background: rgba(0, 206, 209, 0.1); }}
+{{!             padding: 2rem; }}
+{{!             border-radius: 10px; }}
+{{!             text-align: center; }}
+{{!             border: 2px solid rgba(0, 206, 209, 0.3); }}
+{{!         } }}
+{{!}}
+{{!         .stat-number { }}
+{{!             font-size: 4rem; }}
+{{!             color: #FC4C02; }}
+{{!             font-weight: bold; }}
+{{!         } }}
+{{!}}
+{{!         .stat-label { }}
+{{!             font-size: 1.2rem; }}
+{{!             color: #ffffff; }}
+{{!             margin-top: 0.5rem; }}
+{{!         } }}
+{{!}}
+{{!         .content-sections { }}
+{{!             position: relative; }}
+{{!             z-index: 1; }}
+{{!         } }}
+{{!}}
+{{!         .content-step { }}
+{{!             min-height: 100vh; }}
+{{!             display: flex; }}
+{{!             align-items: center; }}
+{{!             padding: 4rem 2rem; }}
+{{!         } }}
+{{!}}
+{{!         .step-content { }}
+{{!             max-width: 600px; }}
+{{!             background: rgba(10, 14, 39, 0.95); }}
+{{!             padding: 3rem; }}
+{{!             border-radius: 15px; }}
+{{!             border-left: 5px solid #FC4C02; }}
+{{!             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); }}
+{{!             margin-left: auto; }}
+{{!             margin-right: 4rem; }}
+{{!             backdrop-filter: blur(10px); }}
+{{!         } }}
+{{!}}
+{{!         .step-content h2 { }}
+{{!             font-size: 2.5rem; }}
+{{!             margin-bottom: 1.5rem; }}
+{{!             color: #FC4C02; }}
+{{!         } }}
+{{!}}
+{{!         .step-content p { }}
+{{!             font-size: 1.3rem; }}
+{{!             line-height: 1.8; }}
+{{!             color: #e0e0e0; }}
+{{!         } }}
+{{!}}
+{{!         .step-content .highlight { }}
+{{!             color: #00CED1; }}
+{{!             font-weight: bold; }}
+{{!         } }}
+{{!}}
+{{!         .footer { }}
+{{!             min-height: 100vh; }}
+{{!             display: flex; }}
+{{!             flex-direction: column; }}
+{{!             justify-content: center; }}
+{{!             align-items: center; }}
+{{!             text-align: center; }}
+{{!             padding: 4rem 2rem; }}
+{{!             background: linear-gradient(135deg, #1a2744 0%, #0a0e27 100%); }}
+{{!         } }}
+{{!}}
+{{!         .footer h2 { }}
+{{!             font-size: 3rem; }}
+{{!             margin-bottom: 2rem; }}
+{{!             color: #00CED1; }}
+{{!         } }}
+{{!}}
+{{!         .footer p { }}
+{{!             font-size: 1.5rem; }}
+{{!             max-width: 800px; }}
+{{!             line-height: 1.8; }}
+{{!         } }}
+{{!}}
+{{!         @media (max-width: 768px) { }}
+{{!             .header h1 { }}
+{{!                 font-size: 2.5rem; }}
+{{!             } }}
+{{!}}
+{{!             .media-container { }}
+{{!                 height: 400px; }}
+{{!                 padding: 1rem; }}
+{{!             } }}
+{{!}}
+{{!             .media-title { }}
+{{!                 font-size: 1.5rem; }}
+{{!             } }}
+{{!}}
+{{!             .media-quote { }}
+{{!                 font-size: 1.8rem; }}
+{{!             } }}
+{{!}}
+{{!             .stat-number { }}
+{{!                 font-size: 3rem; }}
+{{!             } }}
+{{!}}
+{{!             .step-content { }}
+{{!                 margin-right: 2rem; }}
+{{!                 margin-left: 2rem; }}
+{{!             } }}
+{{!}}
+{{!             .step-content h2 { }}
+{{!                 font-size: 2rem; }}
+{{!             } }}
+{{!}}
+{{!             .step-content p { }}
+{{!                 font-size: 1.1rem; }}
+{{!             } }}
+{{!         } }}
+{{!     </style> }}
+{{! </head> }}
+{{! <body> }}
+{{!     <div class="header"> }}
+{{!         <h1>The Perfect Season</h1> }}
+{{!         <p class="subtitle">A Multi-Media Story of the 1972 Miami Dolphins</p> }}
+{{!     </div> }}
+{{!}}
+{{!     <div class="scroll-container"> }}
+{{!         <div class="sticky-visual"> }}
+{{!             <div class="media-container"> }}
+{{!                 <div class="media-title" id="mediaTitle">The Journey Begins</div> }}
+{{!                 <div class="media-content" id="mediaContent"> }}
+{{!                     <!-- Media will be injected here --> }}
+{{!                 </div> }}
+{{!             </div> }}
+{{!         </div> }}
+{{!}}
+{{!         <div class="content-sections"> }}
+{{!             <!-- Media Type: Quote --> }}
+{{!             <div class="content-step" }}
+{{!                  data-media-type="quote" }}
+{{!                  data-media-title="The Mission" }}
+{{!                  data-quote-text="We were going to win every game. There was no doubt in our minds." }}
+{{!                  data-quote-author="Don Shula, Head Coach"> }}
+{{!                 <div class="step-content"> }}
+{{!                     <h2>An Unprecedented Goal</h2> }}
+{{!                     <p>In 1972, the Miami Dolphins set out to accomplish what no NFL team had done before. Under the leadership of coach Don Shula, they believed the impossible was possible.</p> }}
+{{!                 </div> }}
+{{!             </div> }}
+{{!}}
+{{!             <!-- Media Type: Image --> }}
+{{!             <div class="content-step" }}
+{{!                  data-media-type="image" }}
+{{!                  data-media-title="The Perfect Team" }}
+{{!                  data-image-url="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&q=80" }}
+{{!                  data-image-alt="Football stadium"> }}
+{{!                 <div class="step-content"> }}
+{{!                     <h2>The Stage Was Set</h2> }}
+{{!                     <p>The 1972 season kicked off with <span class="highlight">high expectations</span>. The Dolphins had lost the Super Bowl the previous year and were hungry for redemption.</p> }}
+{{!                 </div> }}
+{{!             </div> }}
+{{!}}
+{{!             <!-- Media Type: Stats Grid --> }}
+{{!             <div class="content-step" }}
+{{!                  data-media-type="stats" }}
+{{!                  data-media-title="Season Overview" }}
+{{!                  data-stats='[ }}
+{{!                      {"number": "17", "label": "Wins"}, }}
+{{!                      {"number": "0", "label": "Losses"}, }}
+{{!                      {"number": "385", "label": "Points Scored"}, }}
+{{!                      {"number": "171", "label": "Points Allowed"} }}
+{{!                  ]'> }}
+{{!                 <div class="step-content"> }}
+{{!                     <h2>The Numbers Don't Lie</h2> }}
+{{!                     <p>The Dolphins dominated every statistical category. They outscored opponents by <span class="highlight">214 points</span> over the course of the season.</p> }}
+{{!                 </div> }}
+{{!             </div> }}
+{{!}}
+{{!             <!-- Media Type: Chart --> }}
+{{!             <div class="content-step" }}
+{{!                  data-media-type="chart" }}
+{{!                  data-media-title="Season Progress: Road to 17-0" }}
+{{!                  data-chart-type="line" }}
+{{!                  data-chart-labels='["KC","HOU","MIN","NYJ","SD","BUF","BAL","BUF","NE","NYJ","STL","NE","NYG","BAL","CLE","PIT","WAS"]' }}
+{{!                  data-chart-datasets='[ }}
+{{!                      { }}
+{{!                          "label": "Wins Accumulated", }}
+{{!                          "data": [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17], }}
+{{!                          "borderColor": "#00CED1", }}
+{{!                          "backgroundColor": "rgba(0, 206, 209, 0.1)", }}
+{{!                          "fill": true, }}
+{{!                          "tension": 0.4, }}
+{{!                          "borderWidth": 3, }}
+{{!                          "pointRadius": 5, }}
+{{!                          "pointBackgroundColor": "#FC4C02", }}
+{{!                          "pointBorderColor": "#fff", }}
+{{!                          "pointBorderWidth": 2 }}
+{{!                      } }}
+{{!                  ]'> }}
+{{!                 <div class="step-content"> }}
+{{!                     <h2>Game by Game</h2> }}
+{{!                     <p>Follow the Dolphins through each victory. Every game brought them closer to history, building momentum that became unstoppable.</p> }}
+{{!                 </div> }}
+{{!             </div> }}
+{{!}}
+{{!             <!-- Media Type: Image --> }}
+{{!             <div class="content-step" }}
+{{!                  data-media-type="image" }}
+{{!                  data-media-title="The Running Game" }}
+{{!                  data-image-url="https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=800&q=80" }}
+{{!                  data-image-alt="Football action"> }}
+{{!                 <div class="step-content"> }}
+{{!                     <h2>Ground and Pound</h2> }}
+{{!                     <p>Larry Csonka and Mercury Morris formed one of the most feared backfield duos in NFL history. Both rushed for over <span class="highlight">1,000 yards</span> in the same season.</p> }}
+{{!                 </div> }}
+{{!             </div> }}
+{{!}}
+{{!             <!-- Media Type: Chart --> }}
+{{!             <div class="content-step" }}
+{{!                  data-media-type="chart" }}
+{{!                  data-media-title="Offensive Balance: Rush vs Pass" }}
+{{!                  data-chart-type="bar" }}
+{{!                  data-chart-index-axis="y" }}
+{{!                  data-chart-stacked="true" }}
+{{!                  data-chart-labels='["Avg Per Game"]' }}
+{{!                  data-chart-datasets='[ }}
+{{!                      { }}
+{{!                          "label": "Rushing Yards", }}
+{{!                          "data": [212], }}
+{{!                          "backgroundColor": "#00CED1", }}
+{{!                          "borderColor": "#00CED1", }}
+{{!                          "borderWidth": 2 }}
+{{!                      }, }}
+{{!                      { }}
+{{!                          "label": "Passing Yards", }}
+{{!                          "data": [163], }}
+{{!                          "backgroundColor": "#FC4C02", }}
+{{!                          "borderColor": "#FC4C02", }}
+{{!                          "borderWidth": 2 }}
+{{!                      } }}
+{{!                  ]'> }}
+{{!                 <div class="step-content"> }}
+{{!                     <h2>Perfectly Balanced</h2> }}
+{{!                     <p>The Dolphins' offensive attack kept defenses guessing. They could beat you on the ground or through the air with equal effectiveness.</p> }}
+{{!                 </div> }}
+{{!             </div> }}
+{{!}}
+{{!             <!-- Media Type: Quote --> }}
+{{!             <div class="content-step" }}
+{{!                  data-media-type="quote" }}
+{{!                  data-media-title="The No-Name Defense" }}
+{{!                  data-quote-text="We didn't have the household names, but we had the wins." }}
+{{!                  data-quote-author="Nick Buoniconti, Linebacker"> }}
+{{!                 <div class="step-content"> }}
+{{!                     <h2>Defensive Dominance</h2> }}
+{{!                     <p>The "No-Name Defense" may have lacked star power, but they were the backbone of the perfect season, allowing just <span class="highlight">12.2 points per game</span>.</p> }}
+{{!                 </div> }}
+{{!             </div> }}
+{{!}}
+{{!             <!-- Media Type: Chart --> }}
+{{!             <div class="content-step" }}
+{{!                  data-media-type="chart" }}
+{{!                  data-media-title="Defensive Excellence: Points Allowed" }}
+{{!                  data-chart-type="line" }}
+{{!                  data-chart-labels='["KC","HOU","MIN","NYJ","SD","BUF","BAL","BUF","NE","NYJ","STL","NE","NYG","BAL","CLE","PIT","WAS"]' }}
+{{!                  data-chart-datasets='[ }}
+{{!                      { }}
+{{!                          "label": "Points Allowed", }}
+{{!                          "data": [10,13,14,17,10,23,0,16,0,24,10,21,13,0,14,17,7], }}
+{{!                          "borderColor": "#FC4C02", }}
+{{!                          "backgroundColor": "rgba(252, 76, 2, 0.2)", }}
+{{!                          "fill": true, }}
+{{!                          "tension": 0.4, }}
+{{!                          "borderWidth": 3, }}
+{{!                          "pointRadius": 5, }}
+{{!                          "pointBackgroundColor": "#FC4C02", }}
+{{!                          "pointBorderColor": "#fff", }}
+{{!                          "pointBorderWidth": 2 }}
+{{!                      }, }}
+{{!                      { }}
+{{!                          "label": "NFL Average (18.7)", }}
+{{!                          "data": [18.7,18.7,18.7,18.7,18.7,18.7,18.7,18.7,18.7,18.7,18.7,18.7,18.7,18.7,18.7,18.7,18.7], }}
+{{!                          "borderColor": "rgba(255, 255, 255, 0.3)", }}
+{{!                          "borderDash": [5, 5], }}
+{{!                          "borderWidth": 2, }}
+{{!                          "pointRadius": 0, }}
+{{!                          "fill": false }}
+{{!                      } }}
+{{!                  ]'> }}
+{{!                 <div class="step-content"> }}
+{{!                     <h2>Stifling Defense</h2> }}
+{{!                     <p>Game after game, the defense held opponents well below the league average. Three times they recorded shutouts, not allowing a single point.</p> }}
+{{!                 </div> }}
+{{!             </div> }}
+{{!}}
+{{!             <!-- Media Type: Image --> }}
+{{!             <div class="content-step" }}
+{{!                  data-media-type="image" }}
+{{!                  data-media-title="Super Bowl VII" }}
+{{!                  data-image-url="https://images.unsplash.com/photo-1548633802-a0e02fb8d919?w=800&q=80" }}
+{{!                  data-image-alt="Football trophy"> }}
+{{!                 <div class="step-content"> }}
+{{!                     <h2>The Final Game</h2> }}
+{{!                     <p>On January 14, 1973, at the Los Angeles Memorial Coliseum, the Dolphins defeated the Washington Redskins <span class="highlight">14-7</span> to complete their perfect season.</p> }}
+{{!                 </div> }}
+{{!             </div> }}
+{{!}}
+{{!             <!-- Media Type: Stats Grid --> }}
+{{!             <div class="content-step" }}
+{{!                  data-media-type="stats" }}
+{{!                  data-media-title="Super Bowl VII Stats" }}
+{{!                  data-stats='[ }}
+{{!                      {"number": "14", "label": "Miami Points"}, }}
+{{!                      {"number": "7", "label": "Washington Points"}, }}
+{{!                      {"number": "2", "label": "Jake Scott INTs"}, }}
+{{!                      {"number": "1", "label": "Perfect Season"} }}
+{{!                  ]'> }}
+{{!                 <div class="step-content"> }}
+{{!                     <h2>Championship Numbers</h2> }}
+{{!                     <p>Safety Jake Scott intercepted two passes to earn Super Bowl MVP honors. The defense once again came through when it mattered most.</p> }}
+{{!                 </div> }}
+{{!             </div> }}
+{{!         </div> }}
+{{!     </div> }}
+{{!}}
+{{!     <div class="footer"> }}
+{{!         <h2>17-0: Still Perfect</h2> }}
+{{!         <p>More than five decades later, no team has matched the 1972 Dolphins' perfect season. Their combination of offensive balance, defensive dominance, and unwavering consistency remains the gold standard in professional football.</p> }}
+{{!     </div> }}
+{{!}}
+{{!     <script> }}
+{{!         // Check if Chart.js loaded }}
+{{!         if (typeof Chart === 'undefined') { }}
+{{!             console.warn('Chart.js not loaded, charts will not be available'); }}
+{{!         } }}
+{{!}}
+{{!         const mediaTitle = document.getElementById('mediaTitle'); }}
+{{!         const mediaContent = document.getElementById('mediaContent'); }}
+{{!         let currentChart = null; }}
+{{!}}
+{{!         // Media type handlers }}
+{{!         const mediaHandlers = { }}
+{{!             // Handle quotes }}
+{{!             quote: (element) => { }}
+{{!                 const text = element.dataset.quoteText; }}
+{{!                 const author = element.dataset.quoteAuthor; }}
+{{!}}
+{{!                 return ` }}
+{{!                     <div class="media-quote"> }}
+{{!                         "${text}" }}
+{{!                         <div class="media-quote-author">— ${author}</div> }}
+{{!                     </div> }}
+{{!                 `; }}
+{{!             }, }}
+{{!}}
+{{!             // Handle images }}
+{{!             image: (element) => { }}
+{{!                 const url = element.dataset.imageUrl; }}
+{{!                 const alt = element.dataset.imageAlt || 'Image'; }}
+{{!}}
+{{!                 return `<img src="${url}" alt="${alt}" loading="lazy">`; }}
+{{!             }, }}
+{{!}}
+{{!             // Handle videos }}
+{{!             video: (element) => { }}
+{{!                 const url = element.dataset.videoUrl; }}
+{{!                 const autoplay = element.dataset.videoAutoplay === 'true'; }}
+{{!                 const loop = element.dataset.videoLoop === 'true'; }}
+{{!                 const muted = element.dataset.videoMuted === 'true'; }}
+{{!}}
+{{!                 return ` }}
+{{!                     <video }}
+{{!                         ${autoplay ? 'autoplay' : ''} }}
+{{!                         ${loop ? 'loop' : ''} }}
+{{!                         ${muted ? 'muted' : ''} }}
+{{!                         controls> }}
+{{!                         <source src="${url}" type="video/mp4"> }}
+{{!                         Your browser does not support the video tag. }}
+{{!                     </video> }}
+{{!                 `; }}
+{{!             }, }}
+{{!}}
+{{!             // Handle stats grids }}
+{{!             stats: (element) => { }}
+{{!                 const stats = JSON.parse(element.dataset.stats); }}
+{{!}}
+{{!                 const statBoxes = stats.map(stat => ` }}
+{{!                     <div class="stat-box"> }}
+{{!                         <div class="stat-number">${stat.number}</div> }}
+{{!                         <div class="stat-label">${stat.label}</div> }}
+{{!                     </div> }}
+{{!                 `).join(''); }}
+{{!}}
+{{!                 return `<div class="media-stats">${statBoxes}</div>`; }}
+{{!             }, }}
+{{!}}
+{{!             // Handle charts }}
+{{!             chart: (element) => { }}
+{{!                 // Return canvas element, chart will be created separately }}
+{{!                 return '<canvas id="dynamicChart"></canvas>'; }}
+{{!             } }}
+{{!         }; }}
+{{!}}
+{{!         function createChart(element) { }}
+{{!             if (typeof Chart === 'undefined') { }}
+{{!                 return; }}
+{{!             } }}
+{{!}}
+{{!             const type = element.dataset.chartType; }}
+{{!             const labels = JSON.parse(element.dataset.chartLabels); }}
+{{!             const datasets = JSON.parse(element.dataset.chartDatasets); }}
+{{!             const indexAxis = element.dataset.chartIndexAxis || 'x'; }}
+{{!             const stacked = element.dataset.chartStacked === 'true'; }}
+{{!}}
+{{!             const canvas = document.getElementById('dynamicChart'); }}
+{{!             if (!canvas) return; }}
+{{!}}
+{{!             const ctx = canvas.getContext('2d'); }}
+{{!}}
+{{!             // Destroy old chart }}
+{{!             if (currentChart) { }}
+{{!                 currentChart.destroy(); }}
+{{!             } }}
+{{!}}
+{{!             // Create new chart }}
+{{!             currentChart = new Chart(ctx, { }}
+{{!                 type: type, }}
+{{!                 data: { labels, datasets }, }}
+{{!                 options: { }}
+{{!                     responsive: true, }}
+{{!                     maintainAspectRatio: false, }}
+{{!                     indexAxis: indexAxis, }}
+{{!                     plugins: { }}
+{{!                         legend: { }}
+{{!                             display: type !== 'line' || datasets.length > 1, }}
+{{!                             position: type === 'doughnut' ? 'bottom' : 'top', }}
+{{!                             labels: { }}
+{{!                                 color: '#fff', }}
+{{!                                 font: { size: type === 'doughnut' ? 16 : 14 }, }}
+{{!                                 padding: type === 'doughnut' ? 20 : 10 }}
+{{!                             } }}
+{{!                         }, }}
+{{!                         tooltip: { }}
+{{!                             backgroundColor: 'rgba(10, 14, 39, 0.9)', }}
+{{!                             titleColor: '#00CED1', }}
+{{!                             bodyColor: '#fff', }}
+{{!                             borderColor: '#00CED1', }}
+{{!                             borderWidth: 1 }}
+{{!                         } }}
+{{!                     }, }}
+{{!                     scales: type === 'doughnut' ? undefined : { }}
+{{!                         y: { }}
+{{!                             stacked: stacked, }}
+{{!                             beginAtZero: true, }}
+{{!                             grid: { color: 'rgba(255, 255, 255, 0.1)' }, }}
+{{!                             ticks: { color: '#00CED1', font: { size: 12 } }, }}
+{{!                             title: { }}
+{{!                                 display: indexAxis === 'x', }}
+{{!                                 text: 'Value', }}
+{{!                                 color: '#00CED1', }}
+{{!                                 font: { size: 14 } }}
+{{!                             } }}
+{{!                         }, }}
+{{!                         x: { }}
+{{!                             stacked: stacked, }}
+{{!                             grid: { color: 'rgba(255, 255, 255, 0.1)' }, }}
+{{!                             ticks: { color: '#00CED1', font: { size: 10 } }, }}
+{{!                             title: { }}
+{{!                                 display: indexAxis === 'y', }}
+{{!                                 text: 'Category', }}
+{{!                                 color: '#00CED1', }}
+{{!                                 font: { size: 14 } }}
+{{!                             } }}
+{{!                         } }}
+{{!                     } }}
+{{!                 } }}
+{{!             }); }}
+{{!         } }}
+{{!}}
+{{!         function updateMedia(element) { }}
+{{!             try { }}
+{{!                 const mediaType = element.dataset.mediaType; }}
+{{!                 const title = element.dataset.mediaTitle; }}
+{{!}}
+{{!                 // Update title with fade effect }}
+{{!                 mediaTitle.style.opacity = '0'; }}
+{{!                 mediaContent.style.opacity = '0'; }}
+{{!}}
+{{!                 setTimeout(() => { }}
+{{!                     mediaTitle.textContent = title; }}
+{{!                     mediaTitle.style.opacity = '1'; }}
+{{!}}
+{{!                     // Get the appropriate handler }}
+{{!                     const handler = mediaHandlers[mediaType]; }}
+{{!                     if (handler) { }}
+{{!                         mediaContent.innerHTML = handler(element); }}
+{{!}}
+{{!                         // If it's a chart, create it after a brief delay }}
+{{!                         if (mediaType === 'chart') { }}
+{{!                             setTimeout(() => createChart(element), 100); }}
+{{!                         } }}
+{{!                     } else { }}
+{{!                         mediaContent.innerHTML = `<p>Unknown media type: ${mediaType}</p>`; }}
+{{!                     } }}
+{{!}}
+{{!                     mediaContent.style.opacity = '1'; }}
+{{!                 }, 300); }}
+{{!             } catch (error) { }}
+{{!                 console.error('Error updating media:', error); }}
+{{!             } }}
+{{!         } }}
+{{!}}
+{{!         // Intersection Observer setup }}
+{{!         const observerOptions = { }}
+{{!             root: null, }}
+{{!             rootMargin: '-50% 0px -50% 0px', }}
+{{!             threshold: 0 }}
+{{!         }; }}
+{{!}}
+{{!         const observer = new IntersectionObserver((entries) => { }}
+{{!             entries.forEach(entry => { }}
+{{!                 if (entry.isIntersecting) { }}
+{{!                     updateMedia(entry.target); }}
+{{!                 } }}
+{{!             }); }}
+{{!         }, observerOptions); }}
+{{!}}
+{{!         const steps = document.querySelectorAll('.content-step'); }}
+{{!         steps.forEach(step => { }}
+{{!             observer.observe(step); }}
+{{!         }); }}
+{{!}}
+{{!         // Initialize with first media }}
+{{!         setTimeout(() => { }}
+{{!             updateMedia(steps[0]); }}
+{{!         }, 100); }}
+{{!     </script> }}
+{{!}}
+{{! <main class="gh-main"> }}
+{{!     <article class="gh-article {{post_class}}"> }}
+{{!}}
+{{!         {{#match @page.show_title_and_feature_image}} }}
+{{!             <header class="gh-article-header gh-canvas"> }}
+{{!                 <h1 class="gh-article-title is-title">{{title}}</h1> }}
+{{!                 {{#if custom_excerpt}} }}
+{{!                     <p class="gh-article-excerpt is-body">{{custom_excerpt}}</p> }}
+{{!                 {{/if}} }}
+{{!                 {{> "feature-image"}} }}
+{{!             </header> }}
+{{!         {{/match}} }}
+{{!}}
+{{!         <section class="gh-content gh-canvas is-body"> }}
+{{!             {{content}} }}
+{{!         </section> }}
+{{!}}
+{{!     </article> }}
+{{! </main> }}
+{{!}}
 
 {{/post}}
