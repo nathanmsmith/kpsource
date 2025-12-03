@@ -1,0 +1,100 @@
+<style>
+  .audio-image-section {
+    position: relative;
+    width: 100vw;
+    height: 300vh;
+    margin-left: calc(-50vw + 50%);
+    background: #040D12;
+  }
+
+  .audio-image-container {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .audio-image-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+
+  .audio-image-bg.active {
+    opacity: 1;
+  }
+
+  .audio-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(4, 13, 18, 0.3);
+    pointer-events: none;
+  }
+</style>
+
+<section class="audio-image-section">
+  <div class="audio-image-container">
+    <img src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=1920&q=80"
+         alt="Atmospheric background"
+         class="audio-image-bg">
+    <div class="audio-overlay"></div>
+    <audio class="section-audio" loop>
+      <source src="/path/to/your/audio.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</section>
+
+<script>
+  function initAudioImageSection() {
+    const section = document.querySelector('.audio-image-section');
+    const image = document.querySelector('.audio-image-bg');
+    const audio = document.querySelector('.section-audio');
+
+    if (!section || !image || !audio) return;
+
+    let isInView = false;
+
+    function checkInView() {
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      // Section is in view when its top is at or above viewport top
+      // and its bottom is below viewport bottom
+      const inView = rect.top <= 0 && rect.bottom > viewportHeight;
+
+      if (inView && !isInView) {
+        // Entering the section
+        isInView = true;
+        image.classList.add('active');
+        audio.play().catch(err => {
+          console.log('Audio autoplay prevented:', err);
+        });
+      } else if (!inView && isInView) {
+        // Leaving the section
+        isInView = false;
+        image.classList.remove('active');
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    }
+
+    window.addEventListener('scroll', checkInView, { passive: true });
+    checkInView(); // Initial check
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAudioImageSection);
+  } else {
+    initAudioImageSection();
+  }
+</script>
