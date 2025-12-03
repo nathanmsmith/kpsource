@@ -2,7 +2,7 @@
   .scroll-image-section {
     position: relative;
     width: 100vw;
-    height: 200vh;
+    height: 150vh;
     margin-left: calc(-50vw + 50%);
     overflow: hidden;
   }
@@ -20,15 +20,7 @@
   }
 
   .scroll-image {
-    width: 100%;
-    max-width: 800px;
-    height: auto;
-  }
-
-  @media (max-width: 768px) {
-    .scroll-image {
-      max-width: 90%;
-    }
+    width: 250px;
   }
 </style>
 
@@ -51,12 +43,13 @@
       const rect = section.getBoundingClientRect();
       const sectionHeight = section.offsetHeight;
       const viewportHeight = window.innerHeight;
+      const imageHeight = container.offsetHeight;
 
       // Calculate how far through the section we've scrolled (0 to 1)
       const scrollProgress = Math.max(0, Math.min(1, -rect.top / (sectionHeight - viewportHeight)));
 
-      // Move the image from top (0) to bottom (100vh - image height)
-      const maxTranslate = viewportHeight;
+      // Move the image so it reaches the bottom of the section
+      const maxTranslate = sectionHeight - imageHeight;
       const translateY = scrollProgress * maxTranslate;
 
       container.style.transform = `translateY(${translateY}px)`;
