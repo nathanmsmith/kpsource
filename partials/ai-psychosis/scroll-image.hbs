@@ -37,11 +37,13 @@
       const viewportHeight = window.innerHeight;
       const imageHeight = container.offsetHeight;
 
-      // Calculate how far through the section we've scrolled (0 to 1)
-      const scrollProgress = Math.max(0, Math.min(1, -rect.top / (sectionHeight - viewportHeight)));
-
-      // Move the image so it reaches the bottom of the section
+      // Calculate scroll progress based on the section's position
+      // When section.top = 0, progress = 0
+      // When section.bottom = viewportHeight, progress = 1
       const maxTranslate = sectionHeight - imageHeight;
+      const scrollRange = sectionHeight - imageHeight;
+      const scrollProgress = Math.max(0, Math.min(1, -rect.top / scrollRange));
+
       const translateY = scrollProgress * maxTranslate;
 
       container.style.transform = `translateY(${translateY}px)`;
