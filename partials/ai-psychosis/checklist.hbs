@@ -6,14 +6,6 @@
     display: flex;
   }
 
-  .split-left,
-  .split-right {
-    width: 50%;
-    height: 100vh;
-    position: sticky;
-    top: 0;
-  }
-
   .split-left {
     display: flex;
     align-items: center;
@@ -38,11 +30,6 @@
     animation: fadeIn 2s ease-out forwards;
   }
 
-  .split-right {
-    overflow: hidden;
-    position: relative;
-  }
-
   .split-video {
     width: 100%;
     height: 100%;
@@ -56,6 +43,16 @@
 
   #hua-quote-2 {
     margin: 5rem;
+  }
+
+  @media (min-width: 1280px) {
+    .split-left,
+    .split-right {
+      width: 50%;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+    }
   }
 
   @media (max-width: 1280px) {
