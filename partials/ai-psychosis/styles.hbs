@@ -11,4 +11,84 @@
   .aipsy-main a:visited {
     color: #5C8374;
   }
+
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted #93B1A6;
+    cursor: help;
+  }
+
+  .tooltiptext {
+    visibility: hidden;
+    opacity: 0;
+    width: 250px;
+    background: rgba(4, 13, 18, 0.95);
+    color: #93B1A6;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    position: absolute;
+    z-index: 1000;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -125px;
+    border: 1px solid rgba(147, 177, 166, 0.4);
+    box-shadow: 0 0 20px rgba(92, 131, 116, 0.6);
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(147, 177, 166, 0.4) transparent transparent transparent;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  /* Mobile: show on click */
+  @media (hover: none) {
+    .tooltip.active .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 </style>
+
+<script>
+  // Enable tooltips on mobile via click
+  document.addEventListener('DOMContentLoaded', function() {
+    if ('ontouchstart' in window) {
+      document.querySelectorAll('.tooltip').forEach(tooltip => {
+        tooltip.addEventListener('click', function(e) {
+          e.preventDefault();
+          // Close other tooltips
+          document.querySelectorAll('.tooltip.active').forEach(other => {
+            if (other !== this) other.classList.remove('active');
+          });
+          // Toggle this tooltip
+          this.classList.toggle('active');
+        });
+      });
+
+      // Close tooltips when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.tooltip')) {
+          document.querySelectorAll('.tooltip.active').forEach(tooltip => {
+            tooltip.classList.remove('active');
+          });
+        }
+      });
+    }
+  });
+</script>
