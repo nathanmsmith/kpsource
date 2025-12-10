@@ -24,17 +24,13 @@
     background:
       conic-gradient(from 0deg at 50% 50%,
         rgba(24, 61, 61, 0.5) 0deg,
-        rgba(58, 96, 89, 0.45) 36deg,
         rgba(92, 131, 116, 0.4) 72deg,
-        rgba(120, 154, 141, 0.35) 108deg,
         rgba(147, 177, 166, 0.3) 144deg,
-        rgba(86, 119, 114, 0.4) 180deg,
         rgba(24, 61, 61, 0.5) 216deg,
-        rgba(58, 96, 89, 0.45) 252deg,
         rgba(92, 131, 116, 0.4) 288deg,
-        rgba(58, 96, 89, 0.45) 324deg,
         rgba(24, 61, 61, 0.5) 360deg),
       radial-gradient(ellipse at 50% 50%, transparent 0%, rgba(4, 13, 18, 0.8) 100%);
+    animation: psychosis-spiral 6s linear infinite, psychosis-pulse 10s ease-in-out infinite;
   }
 
   .glitch-overlay {
@@ -146,13 +142,12 @@
 
   .distortion-layer {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 150%;
-    height: 150%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-image:
-      repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 10px, rgba(255, 255, 255, 0.03) 10px, rgba(255, 255, 255, 0.03) 20px);
+      repeating-radial-gradient(circle at 30% 30%, transparent 0, transparent 10px, rgba(255, 255, 255, 0.03) 10px, rgba(255, 255, 255, 0.03) 20px);
     animation: distortion-rotate 15s linear infinite;
     mix-blend-mode: overlay;
   }
@@ -161,7 +156,6 @@
     margin: 0 2rem;
     z-index: 10;
     text-align: center;
-    /* color: #93B1A6; */
     color: #C5E4D8;
     text-shadow:
       0 0 10px rgba(92, 131, 116, 0.8),
@@ -232,6 +226,34 @@
     }
   }
 
+  @keyframes psychosis-pulse {
+    0%, 100% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    25% {
+      transform: scale(1.1) rotate(2deg);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(0.95) rotate(-2deg);
+      opacity: 0.9;
+    }
+    75% {
+      transform: scale(1.05) rotate(1deg);
+      opacity: 0.85;
+    }
+  }
+
+  @keyframes psychosis-spiral {
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+    100% {
+      transform: rotate(360deg) scale(1.2);
+    }
+  }
+
   @keyframes glitch-scan {
     0% {
       transform: translateY(0);
@@ -266,10 +288,13 @@
 
   @keyframes distortion-rotate {
     0% {
-      transform: translate(-50%, -50%) rotate(0deg) scale(1);
+      transform: rotate(0deg) scale(1);
+    }
+    50% {
+      transform: rotate(180deg) scale(1.3);
     }
     100% {
-      transform: translate(-50%, -50%) rotate(360deg) scale(1.5);
+      transform: rotate(360deg) scale(1);
     }
   }
 
@@ -297,8 +322,6 @@
   <div class="psychosis-bg"></div>
   <div class="glitch-overlay"></div>
   <div class="floating-shapes">
-    <div class="shape"></div>
-    <div class="shape"></div>
     <div class="shape"></div>
     <div class="shape"></div>
     <div class="shape"></div>
